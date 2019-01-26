@@ -1,40 +1,63 @@
-<!--Saved Articles Page-->
+<nav class="navbar fixed-top navbar-dark bg-dark justify-content-between">
+    <a class="navbar-brand" href="/">Mongo Scraper</a>
+    <form class="form-inline">
+        <a class="nav-item nav-link" href="/">Home</a>
+        <a class="nav-item nav-link" href="/saved">Saved Articles</a>
+        <a class="btn btn-outline-danger my-2 my-sm-0" href="/scrape">Scrape</a>
+    </form>
+</nav>
 
-<div class="container">
-
-    <div class="col-md-12 jumbotron">
-        <div class="text-center">
-            <h1> Saved Articles</h1>
+<div class="container-fluid">
+    <div class="jumbotron text-center">
+        <div class="overlay">
+            <div class="caption">
+                <h1 class="display-1 text-white mng">NYT Mongo Scraper</h1>
+            </div>
         </div>
     </div>
-    <div class="col-md-12">
-        {{#if article}}
-        {{#each article}}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4>{{this.title}}</h4>
+    <div class="row">
+        <div class="col-12">
+            {{#each articles}}
+            <div class="card w-90">
+                <div class="card-header text-white bg-dark">
+                    <a href={{link}} target="_blank" class="text-white">
+                        <h2>{{title}}</h2>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        {{summary}}
+                    </p>
+                    <button data="{{_id}}" class="btn btn-secondary note-btn">Article Notes</button>
+                    <button data="{{_id}}" class="btn btn-danger delete-btn">Delete From Saved</button>
+                </div>
             </div>
-            <div class="panel-body">
-                <p> {{this.summary}}</p>
-                <a href={{this.link}} target="_blank">{{this.link}}</a>
-                <br><br>
-                <button type="button" class="btn btn-success addNote" data-toggle="modal" data-target="#noteModal{{this._id}}"
-                    data-id={{this._id}}>Add a Note</button>
-                <button type="button" class="btn btn-danger delete" data-id={{this._id}}>Delete</button>
-            </div>
+            {{/each}}
         </div>
-        {{/each}}
-        {{else}}
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h4>You have no saved articles.</h4>
-            </div>
-        </div>
-        {{/if}}
     </div>
 </div>
-
-<!--Clicked Notes Modal-->
-{{#each article}}
-{{> notes-modal }}
-{{/each}}
+<div class="modal fade" id="note-modal" tabindex="-1" role="dialog" aria-labelledby="successMessage" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Notes for Article <span id="article-id"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <ul class="list-group list-group-flush articles-available">
+                    </ul>
+                </div>
+                <br />
+                <div class="form-group">
+                    <textarea class="form-control" id="note-input" rows="3" placeholder="Enter Note Here"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="save-note">Save Note</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<nav class="navbar fixed-top navbar-dark bg-dark justify-content-between">
+    <a class="navbar-brand" href="/">Mongo Scraper</a>
+    <form class="form-inline">
+        <a class="nav-item nav-link" href="/">Home</a>
+        <a class="nav-item nav-link" href="/saved">Saved Articles</a>
+        <a class="btn btn-outline-danger my-2 my-sm-0" href="/scrape">Scrape</a>
+    </form>
+</nav>
+
+<div class="container-fluid">
+    <div class="jumbotron text-center">
+        <div class="overlay">
+            <div class="caption">
+                <h1 class="display-1 mng">NYT Mongo Scraper</h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {{#if scrapedItems}}
+            {{#each scrapedItems}}
+            <div class="card w-90">
+                <div class="card-header bg-dark">
+                    <a href={{link}} target="blank">
+                        <h2>{{title}}</h2>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        {{summary}}
+                    </p>
+                    <button id="{{_id}}" class="btn btn-secondary save-btn">Save Article</button>
+                </div>
+            </div>
+            {{/each}}
+            {{else}}
+            <div class="card bg-dark w-90 p-1">
+                <div class="card-body text-center">
+                    Use Scrape button to get articles!
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</div>
